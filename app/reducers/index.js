@@ -1,11 +1,13 @@
 import {combineReducers} from 'redux';
-import userReducer from './userReducer.js';
-import widgetReducer from './widgetReducer.js';
 
-const reducers = combineReducers({
-	userState: userReducer,
-	widgetState: widgetReducer
+import booze from './boozeReducer';
+import starter from './starterReducer';
+import extras from './extrasReducer';
+import user from './userReducer';
+
+export default combineReducers({
+	user,
+	starter,
+	extras,
+	booze
 });
-
-export default reducers;
-
