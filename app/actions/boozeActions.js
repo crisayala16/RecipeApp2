@@ -1,7 +1,7 @@
-export function fetchBooze(starter){
+export function fetchBooze(results){
 	return {
 		type: 'FETCH_BOOZE',
-		payload: starter
+		payload: results
 	}
 }
 

@@ -3,15 +3,18 @@ import {connect} from 'react-redux';
 import store from './../store.js';
 import * as user from './../actions/userActions.js';
 import * as booze from './../actions/boozeActions.js';
+import axios from 'axios';
 
 class Main extends React.Component{
 	getUser(){
 		store.dispatch(user.fetchUser());
 	}
-	getBooze(e){
-		e.preventDefault();
-		console.log(e.target.starter.value);
-		store.dispatch(booze.fetchBooze(this.props.starter));
+	getBooze(event){
+		event.preventDefault();
+		const starter = event.target.starter.value;
+		const results = axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${starter}`);
+		store.dispatch(booze.fetchBooze(results));
+		console.log(results);
 	}
 	handleStarter(event){
 		event.preventDefault();
@@ -19,6 +22,7 @@ class Main extends React.Component{
 		store.dispatch(booze.handleStarter(starter));
 	}
 	render(){
+		console.log(this.props.booze);
 		return(
 			<div>
 			<h2>{this.props.user.name}</h2>
@@ -28,17 +32,18 @@ class Main extends React.Component{
 			<input type='text' name='starter' onChange={this.handleStarter}/>
 			<button type='submit'>Find Booze</button>
 			</form>
-			<ul>
+			<div>
 				{
-					// this.props.booze.map((item)=>{
-					// 	return(
-					// 		<li key={item.idDrink}>
-					// 			{item.strDrink}
-					// 		</li>
-					// 	)
-					// })
+					this.props.booze.map((item)=>{
+						return(
+							<div key={item.idDrink}>
+								<h3>{item.strDrink}</h3>
+								<img src={item.strDrinkThumb} width='150'/>
+							</div>
+						)
+					})
 				}
-			</ul>
+			</div>
 			</div>
 		);
 	}
@@ -49,7 +54,7 @@ const mapStateToProps = function(store) {
 		user: store.user.user,
 		starter: store.starter.starter,
 		extras: store.extras,
-		booze: store.booze
+		booze: store.booze.results
 	};
 }
 

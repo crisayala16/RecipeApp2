@@ -1,11 +1,9 @@
 import axios from 'axios';
-const boozeReducer = function(state = [], action) {
+const boozeReducer = function(state = {results: []}, action) {
 	switch(action.type){
-		case 'FETCH_BOOZE': 
-		axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${action.payload}`).then(function(response){
-			console.log(state.concat(response.data.drinks[0]));
-			return state.concat(response.data.drinks[0]);
-		});
+		case 'FETCH_BOOZE_FULFILLED': 
+		return {...state, results: action.payload.data.drinks};
+		break;
 	}
 	return state;
 }
