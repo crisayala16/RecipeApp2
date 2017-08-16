@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import store from './../store.js';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as user from './../actions/userActions.js';
 import * as booze from './../actions/boozeActions.js';
+import TabBar from './Children/TabBar.js';
 import axios from 'axios';
 
 class Main extends React.Component{
@@ -24,7 +26,9 @@ class Main extends React.Component{
 	render(){
 		console.log(this.props.booze);
 		return(
+			<MuiThemeProvider>
 			<div>
+			<TabBar/>
 			<h2>{this.props.user.name}</h2>
 			<h3>Age: {this.props.user.age}</h3>
 			<button onClick={this.getUser}>Get Name</button>
@@ -45,15 +49,16 @@ class Main extends React.Component{
 				}
 			</div>
 			</div>
+			</MuiThemeProvider>
 		);
 	}
 }
 
-const mapStateToProps = function(store) {
+const mapStateToProps = (store) => {
 	return {
 		user: store.user.user,
-		starter: store.starter.starter,
-		extras: store.extras,
+		starter: store.booze.starter,
+		extras: store.booze.extras,
 		booze: store.booze.results
 	};
 }
