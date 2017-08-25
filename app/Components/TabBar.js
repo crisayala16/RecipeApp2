@@ -12,19 +12,15 @@ const TabBar = () => (
     <Tab
       containerElement={<Link to='/home' />}
       icon={<AccountCircle/>}
-    >
-    </Tab>
+    />
     <Tab
       icon={<ActionSearch/>}
       containerElement={<Link to='/search' />}
-    >
-      <Search/>
-    </Tab>
+    />
     <Tab
       icon={<LocalBar />}
       containerElement={<Link to='/saved' />}
-    >
-    </Tab>
+    />
   </Tabs>
 );
 

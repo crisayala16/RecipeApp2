@@ -7,36 +7,48 @@ import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import IngList from './../Presentational/IngList.js';
+
 class Search extends React.Component{
 	getUser(){
 		store.dispatch(user.fetchUser());
 	}
-	getBooze(event){
-		event.preventDefault();
-		const starter = event.target.starter.value;
-		const results = axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${starter}`);
-		store.dispatch(booze.fetchBooze(results));
-		console.log(results);
+	getBooze(e){
+		e.preventDefault();
+		let ingredient;
+		if(this.props.ingredients.length > 0){
+			ingredient = this.props.ingredients[0];
+		}
+		else if(this.props.ingredients.length === 0){
+			ingredient = e.target.ingredient.value;
+		}
+		console.log(ingredient);
+		axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`).then(function(response){
+			store.dispatch(booze.fetchBooze(response.data.drinks));
+		});
+		this.addIngredient(e.target.ingredient.value);
+
 	}
-	handleStarter(event){
-		event.preventDefault();
-		const starter = event.target.value;
-		store.dispatch(booze.handleStarter(starter));
+	addIngredient(ingredient){
+		store.dispatch(booze.addIngredient(ingredient));
+	}
+	removeIngredient(e){
+
 	}
 	render(){
-		console.log(this.props.booze);
+		console.log(this.props.ingredients);
 		return(
 			<div>
 			<form onSubmit={this.getBooze.bind(this)}>
 			<TextField
-		    floatingLabelText="Starter"
-		    name='starter'
-		    onChange={this.handleStarter}
+		    floatingLabelText='Ingredient'
+		    name='ingredient'
 		    />
 		    <FloatingActionButton mini={true} type='submit'>
 		      <ContentAdd />
 		    </FloatingActionButton>
 			</form>
+			<IngList data={this.props.ingredients}/>
 			<div>
 				{
 					this.props.booze.map((item)=>{
@@ -57,8 +69,7 @@ class Search extends React.Component{
 const mapStateToProps = (store) => {
 	return {
 		user: store.user.user,
-		starter: store.booze.starter,
-		extras: store.booze.extras,
+		ingredients: store.booze.ingredients,
 		booze: store.booze.results
 	};
 }

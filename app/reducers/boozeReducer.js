@@ -1,19 +1,17 @@
-import axios from 'axios';
 const initialState = {
-	starter: '',
-	extras: [],
+	ingredients: [],
 	results: []
 };
 const boozeReducer = function(state = initialState, action) {
 	switch(action.type){
-		case 'HANDLE_STARTER': 
-		return {...state, starter: action.payload};
+		case 'ADD_INGREDIENT': 
+		return {...state, ingredients: state.ingredients.concat(action.payload)};
 		break;
-		case 'HANDLE_EXTRAS': 
-		return {...state, extras: action.payload};
+		case 'REMOVE_INGREDIENT':
+		return {...state, ingredients: state.ingredients.filter((item)=> {return item != action.payload})};
 		break;
-		case 'FETCH_BOOZE_FULFILLED': 
-		return {...state, results: action.payload.data.drinks};
+		case 'FETCH_BOOZE': 
+		return {...state, results: action.payload};
 		break;
 	}
 	return state;

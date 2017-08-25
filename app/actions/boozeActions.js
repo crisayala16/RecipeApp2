@@ -5,9 +5,16 @@ export function fetchBooze(results){
 	}
 }
 
-export function handleStarter(starter){
+export function addIngredient(ingredient){
 	return {
-		type: 'HANDLE_STARTER',
-		payload: starter
+		type: 'ADD_INGREDIENT',
+		payload: ingredient
+	}
+}
+
+export function removeIngredient(ingredient){
+	return {
+		type: 'REMOVE_INGREDIENT',
+		payload: ingredient
 	}
 }
