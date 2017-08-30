@@ -9,7 +9,7 @@ class Main extends React.Component{
 		return(
 			<MuiThemeProvider>
 				<div>
-				<TabBar/>
+				<Route path='/' component={TabBar}/>
 				<Route path='/search' component={Search}/>
 				</div>
 			</MuiThemeProvider>

@@ -32,11 +32,10 @@ class Search extends React.Component{
 	addIngredient(ingredient){
 		store.dispatch(booze.addIngredient(ingredient));
 	}
-	removeIngredient(e){
-
+	removeIngredient(ingredient){
+		store.dispatch(booze.removeIngredient(ingredient));
 	}
 	render(){
-		console.log(this.props.ingredients);
 		return(
 			<div>
 			<form onSubmit={this.getBooze.bind(this)}>
@@ -45,10 +44,10 @@ class Search extends React.Component{
 		    name='ingredient'
 		    />
 		    <FloatingActionButton mini={true} type='submit'>
-		      <ContentAdd />
+		      <ContentAdd/>
 		    </FloatingActionButton>
 			</form>
-			<IngList data={this.props.ingredients}/>
+			<IngList removeIngredient={this.removeIngredient} data={this.props.ingredients}/>
 			<div>
 				{
 					this.props.booze.map((item)=>{
