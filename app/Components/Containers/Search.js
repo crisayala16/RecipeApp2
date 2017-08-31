@@ -22,7 +22,6 @@ class Search extends React.Component{
 		else if(this.props.ingredients.length === 0){
 			ingredient = e.target.ingredient.value;
 		}
-		console.log(ingredient);
 		axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`).then(function(response){
 			store.dispatch(booze.fetchBooze(response.data.drinks));
 		});
@@ -33,7 +32,16 @@ class Search extends React.Component{
 		store.dispatch(booze.addIngredient(ingredient));
 	}
 	removeIngredient(ingredient){
-		store.dispatch(booze.removeIngredient(ingredient));
+		let removePromise = new Promise((resolve, reject) => {
+				store.dispatch(booze.removeIngredient(ingredient));
+				resolve('Good to go!');
+			});
+		const self = this;
+		removePromise.then(function(){
+			axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${self.props.ingredients[0]}`).then(function(response){
+				store.dispatch(booze.fetchBooze(response.data.drinks));
+			});
+		});
 	}
 	render(){
 		return(
@@ -47,7 +55,7 @@ class Search extends React.Component{
 		      <ContentAdd/>
 		    </FloatingActionButton>
 			</form>
-			<IngList removeIngredient={this.removeIngredient} data={this.props.ingredients}/>
+			<IngList removeIngredient={this.removeIngredient.bind(this)} data={this.props.ingredients}/>
 			<div>
 				{
 					this.props.booze.map((item)=>{

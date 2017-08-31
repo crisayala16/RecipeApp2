@@ -11,7 +11,7 @@ export default class TabBar extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      value: 'home'
+      value: ''
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -34,9 +34,9 @@ export default class TabBar extends React.Component{
       onChange={this.handleChange}
       >
         <Tab
-          containerElement={<Link to='/home' />}
+          containerElement={<Link to='/' />}
           icon={<AccountCircle/>}
-          value='home'
+          value=''
         />
         <Tab
           icon={<ActionSearch/>}
