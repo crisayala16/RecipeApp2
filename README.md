@@ -1,6 +1,6 @@
 # RecipeApp2
 
-(/demo.png.png)
+![Demo](demo.png.png)
 
 # Technologies
 
