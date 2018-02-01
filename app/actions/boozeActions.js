@@ -18,3 +18,10 @@ export function removeIngredient(ingredient){
 		payload: ingredient
 	}
 }
+
+export function setListOfIngredients(data){
+	return {
+		type: 'SET_LIST_OF_INGREDIENTS',
+		payload: data
+	}
+}

@@ -1,6 +1,7 @@
 const initialState = {
 	ingredients: [],
-	results: []
+	results: [],
+	listOfIngredients: []
 };
 const boozeReducer = function(state = initialState, action) {
 	switch(action.type){
@@ -12,6 +13,9 @@ const boozeReducer = function(state = initialState, action) {
 		break;
 		case 'FETCH_BOOZE': 
 		return {...state, results: action.payload};
+		break;
+		case 'SET_LIST_OF_INGREDIENTS':
+		return {...state, listOfIngredients: action.payload};
 		break;
 	}
 	return state;
